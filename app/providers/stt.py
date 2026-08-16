@@ -5,6 +5,9 @@ ASR that handles English<->Hindi code-switching inside a single utterance
 (no translation tables anywhere).
 Fallback: OpenAI gpt-4o-transcribe over the realtime websocket, also natively
 multilingual, used when a Deepgram key is unavailable.
+
+Agent personas may override provider/model/language; a Deepgram selection
+still degrades to OpenAI when no key is configured.
 """
 
 from loguru import logger
@@ -12,23 +15,27 @@ from loguru import logger
 from app.config.settings import settings
 
 
-def create_stt():
-    provider = settings.stt_provider.lower()
-    if provider == "deepgram" and settings.deepgram_api_key:
+def create_stt(provider: str | None = None, model: str | None = None, language: str | None = None):
+    resolved_provider = (provider or settings.stt_provider).lower()
+    if resolved_provider == "deepgram" and settings.deepgram_api_key:
         from livekit.plugins import deepgram
 
-        logger.info(f"STT: deepgram {settings.stt_model} language={settings.stt_language}")
+        resolved_model = model or settings.stt_model
+        resolved_language = language or settings.stt_language
+        logger.info(f"STT: deepgram {resolved_model} language={resolved_language}")
         return deepgram.STT(
-            model=settings.stt_model,
-            language=settings.stt_language,
+            model=resolved_model,
+            language=resolved_language,
             api_key=settings.deepgram_api_key,
             interim_results=True,
             smart_format=True,
             punctuate=True,
         )
-    if provider == "deepgram":
+    if resolved_provider == "deepgram":
         logger.warning("DEEPGRAM_API_KEY missing — falling back to OpenAI STT")
+        model = None  # a deepgram model name must not leak into the openai call
     from livekit.plugins import openai
 
-    logger.info(f"STT: openai {settings.openai_stt_model} (multilingual)")
-    return openai.STT(model=settings.openai_stt_model, api_key=settings.openai_api_key)
+    resolved_model = model or settings.openai_stt_model
+    logger.info(f"STT: openai {resolved_model} (multilingual)")
+    return openai.STT(model=resolved_model, api_key=settings.openai_api_key)

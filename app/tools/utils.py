@@ -40,7 +40,15 @@ def _current_language(ctx: RunContext) -> str:
 
 async def _speak_holding_phrase(ctx: RunContext) -> None:
     try:
-        await asyncio.sleep(settings.tool_holding_phrase_after_seconds)
+        state = getattr(ctx, "userdata", None)
+        call_cfg = ((getattr(state, "context", None) or {}).get("agent_config") or {}).get(
+            "call_config"
+        ) or {}
+        await asyncio.sleep(
+            call_cfg.get(
+                "holding_phrase_after_seconds", settings.tool_holding_phrase_after_seconds
+            )
+        )
         language = _current_language(ctx)
         phrase = random.choice(HOLDING_PHRASES.get(language, HOLDING_PHRASES["en"]))
         session = getattr(ctx, "session", None)

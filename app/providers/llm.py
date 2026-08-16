@@ -3,8 +3,10 @@ from loguru import logger
 from app.config.settings import settings
 
 
-def create_llm(model: str | None = None, temperature: float | None = None):
-    provider = settings.llm_provider.lower()
+def create_llm(
+    provider: str | None = None, model: str | None = None, temperature: float | None = None
+):
+    provider = (provider or settings.llm_provider).lower()
     from livekit.plugins import openai
 
     resolved_temperature = settings.llm_temperature if temperature is None else temperature

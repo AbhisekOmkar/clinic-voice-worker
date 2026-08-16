@@ -21,19 +21,40 @@ class ReceptionistRunner:
         self.session: AgentSession | None = None
         self.latency = LatencyCollector()
 
+    def _agent_config(self) -> dict:
+        return (self.state.context or {}).get("agent_config") or {}
+
     def build_session(self, stt=None, llm=None, tts=None, turn_detection=None) -> AgentSession:
         from app.providers.llm import create_llm
         from app.providers.stt import create_stt
         from app.providers.tts import create_tts
 
-        agent_config = (self.state.context or {}).get("agent_config") or {}
+        agent_config = self._agent_config()
+        stt_cfg = agent_config.get("stt_config") or {}
+        llm_cfg = agent_config.get("llm_config") or {}
+        tts_cfg = agent_config.get("tts_config") or {}
+        call_cfg = agent_config.get("call_config") or {}
+
+        if stt is None:
+            stt = create_stt(
+                provider=stt_cfg.get("provider"),
+                model=stt_cfg.get("model"),
+                language=stt_cfg.get("language"),
+            )
         if llm is None:
             llm = create_llm(
-                model=agent_config.get("llm_model"),
-                temperature=agent_config.get("temperature"),
+                provider=llm_cfg.get("provider"),
+                # flat-field fallback keeps pre-config agent documents working
+                model=llm_cfg.get("model") or agent_config.get("llm_model"),
+                temperature=llm_cfg.get("temperature", agent_config.get("temperature")),
             )
         if tts is None:
-            tts = create_tts(voice_id=agent_config.get("voice_id"))
+            tts = create_tts(
+                provider=tts_cfg.get("provider"),
+                voice_id=tts_cfg.get("voice_id") or agent_config.get("voice_id"),
+                model=tts_cfg.get("model"),
+                speed=tts_cfg.get("speed"),
+            )
 
         if turn_detection is None:
             try:
@@ -46,14 +67,18 @@ class ReceptionistRunner:
 
         session = AgentSession(
             userdata=self.state,
-            stt=stt or create_stt(),
-            llm=llm or create_llm(),
-            tts=tts or create_tts(),
+            stt=stt,
+            llm=llm,
+            tts=tts,
             vad=self.vad,
             turn_detection=turn_detection,
-            allow_interruptions=settings.allow_interruptions,
-            min_endpointing_delay=settings.min_endpointing_delay,
-            max_endpointing_delay=settings.max_endpointing_delay,
+            allow_interruptions=call_cfg.get("allow_interruptions", settings.allow_interruptions),
+            min_endpointing_delay=call_cfg.get(
+                "min_endpointing_delay", settings.min_endpointing_delay
+            ),
+            max_endpointing_delay=call_cfg.get(
+                "max_endpointing_delay", settings.max_endpointing_delay
+            ),
         )
         self.session = session
         self._register_handlers(session)
@@ -86,7 +111,8 @@ class ReceptionistRunner:
         )
 
     def room_input_options(self) -> RoomInputOptions | None:
-        if not settings.enable_noise_cancellation:
+        call_cfg = self._agent_config().get("call_config") or {}
+        if not call_cfg.get("enable_noise_cancellation", settings.enable_noise_cancellation):
             return None
         try:
             from livekit.plugins import noise_cancellation
