@@ -74,16 +74,16 @@ class ReceptionistRunner:
         if not settings.enable_noise_cancellation:
             return None
         try:
+            from livekit.plugins import noise_cancellation
+
             is_sip = (
                 self.participant is not None
                 and self.participant.kind == rtc.ParticipantKind.PARTICIPANT_KIND_SIP
             )
-            module = "bvc_telephony" if is_sip else "bvc"
-            return RoomInputOptions(
-                noise_cancellation=rtc.NoiseCancellationOptions(module_id=module, options={})
-            )
+            nc = noise_cancellation.BVCTelephony() if is_sip else noise_cancellation.BVC()
+            return RoomInputOptions(noise_cancellation=nc)
         except Exception as exc:
-            logger.warning(f"noise cancellation unavailable: {exc}")
+            logger.warning(f"noise cancellation unavailable, continuing without: {exc}")
             return None
 
     async def start(self) -> None:
