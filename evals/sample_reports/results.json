@@ -1,0 +1,1116 @@
+{
+  "meta": {
+    "run_id": "20260816_172641",
+    "llm_model": "gpt-4.1",
+    "started_at": "2026-08-16T17:28:49.037333+00:00",
+    "duration_seconds": 127.4,
+    "scenario_count": 12
+  },
+  "per_language": {
+    "en": {
+      "scenarios": 8,
+      "passed": 8,
+      "task_success_rate": 1.0,
+      "avg_turns_to_completion": 2.4,
+      "redundant_question_rate": 0.0,
+      "language_violation_count": 0,
+      "script_drift_count": 0,
+      "llm_ttft_ms_p50": 969.4,
+      "hindi_quality_avg": null
+    },
+    "hi": {
+      "scenarios": 3,
+      "passed": 3,
+      "task_success_rate": 1.0,
+      "avg_turns_to_completion": 2.5,
+      "redundant_question_rate": 0.0,
+      "language_violation_count": 2,
+      "script_drift_count": 0,
+      "llm_ttft_ms_p50": 901.8,
+      "hindi_quality_avg": 4.3
+    },
+    "mixed": {
+      "scenarios": 1,
+      "passed": 1,
+      "task_success_rate": 1.0,
+      "avg_turns_to_completion": 2,
+      "redundant_question_rate": 0.0,
+      "language_violation_count": 2,
+      "script_drift_count": 0,
+      "llm_ttft_ms_p50": 839.0,
+      "hindi_quality_avg": 4
+    }
+  },
+  "scenarios": [
+    {
+      "scenario_id": "book_specific_date_around_time_en",
+      "language": "en",
+      "category": "underspecified_time",
+      "passed": true,
+      "completed": true,
+      "disposition": "booked",
+      "turns_total": 2,
+      "turns_to_completion": 2,
+      "tool_calls": [
+        {
+          "name": "get_availability",
+          "args": {
+            "specialty": "Dermatology",
+            "doctor_name": null,
+            "branch": null,
+            "date_from": "2026-08-22",
+            "date_to": "2026-08-22",
+            "weekdays": null,
+            "after_time": "12:30",
+            "before_time": "13:30",
+            "near_time": "13:00",
+            "earliest": false
+          }
+        },
+        {
+          "name": "book_appointment",
+          "args": {
+            "patient_full_name": "Ananya Iyer",
+            "doctor_name": "Dr. Meera Shridhar",
+            "branch": "indiranagar",
+            "date": "2026-08-22",
+            "start_time": "13:00",
+            "reason": null,
+            "patient_phone": "+919810000001"
+          }
+        }
+      ],
+      "tool_expectation_failures": [],
+      "db_assertion_failures": [],
+      "redundant_questions": [],
+      "language_violations": [],
+      "script_language_violations": [],
+      "hindi_quality": null,
+      "code_switch_naturalness": null,
+      "llm_ttft_ms": [
+        1114.4
+      ],
+      "turn_wall_ms": [
+        3948.3,
+        3062.5
+      ],
+      "transcript": [
+        {
+          "role": "agent",
+          "text": "Hello! Apollo Clinic, Indiranagar and HSR Layout — this is Asha. How may I help you?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Hi, do you have anything with a skin specialist on Saturday 22 August, around 1 o'clock?",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Yes, we have slots with skin specialists on Saturday, 22nd August, around 1 o'clock. You can see Dr. Meera Shridhar at Indiranagar or Dr. Tejashwini S M at HSR Layout, both at 1 PM. Would you like to book with one of them? If you prefer a slightly earlier or later time, there are slots at 12:45 and 1:15 as well. Which doctor and branch would you like?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Perfect, book whichever is closest to one. This is Ananya Iyer.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Your appointment is booked, Ananya. You’ll see Dr. Meera Shridhar at Apollo Clinic Indiranagar on Saturday, 22nd August at 1 PM. The fee is eight hundred rupees. Is there anything else I can help you with?",
+          "lang": "en"
+        }
+      ],
+      "error": null
+    },
+    {
+      "scenario_id": "book_weekday_preference_en",
+      "language": "en",
+      "category": "underspecified_time",
+      "passed": true,
+      "completed": true,
+      "disposition": "booked",
+      "turns_total": 3,
+      "turns_to_completion": 2,
+      "tool_calls": [
+        {
+          "name": "get_availability",
+          "args": {
+            "specialty": "Dermatology",
+            "doctor_name": null,
+            "branch": null,
+            "date_from": "2026-08-17",
+            "date_to": null,
+            "weekdays": "Monday,Wednesday",
+            "after_time": null,
+            "before_time": null,
+            "near_time": null,
+            "earliest": false
+          }
+        },
+        {
+          "name": "get_availability",
+          "args": {
+            "specialty": "Dermatology",
+            "doctor_name": null,
+            "branch": null,
+            "date_from": "2026-08-17",
+            "date_to": "2026-08-17",
+            "weekdays": "Monday",
+            "after_time": "16:00",
+            "before_time": null,
+            "near_time": null,
+            "earliest": true
+          }
+        },
+        {
+          "name": "book_appointment",
+          "args": {
+            "patient_full_name": "Rohit Malhotra",
+            "doctor_name": "Dr. Meera Shridhar",
+            "branch": "indiranagar",
+            "date": "2026-08-17",
+            "start_time": "17:00",
+            "reason": null,
+            "patient_phone": "+919810000002"
+          }
+        }
+      ],
+      "tool_expectation_failures": [],
+      "db_assertion_failures": [],
+      "redundant_questions": [],
+      "language_violations": [],
+      "script_language_violations": [],
+      "hindi_quality": null,
+      "code_switch_naturalness": null,
+      "llm_ttft_ms": [
+        1058.7
+      ],
+      "turn_wall_ms": [
+        2404.3,
+        3944.7,
+        1420.0
+      ],
+      "transcript": [
+        {
+          "role": "agent",
+          "text": "Hello! Apollo Clinic, Indiranagar and HSR Layout — this is Asha. How may I help you?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Hello, I want to see a dermatologist but only Mondays and Wednesdays work well for me.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "You can see a dermatologist this Monday, seventeenth August. I have Dr. Meera Shridhar at Indiranagar at ten in the morning, or Dr. Poovamma A S at HSR Layout at ten thirty. Would you like to book one of these?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Monday evening please, whichever slot. My name is Rohit Malhotra.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Your appointment is booked, Rohit Malhotra, with Dr. Meera Shridhar at Apollo Clinic Indiranagar, Monday, seventeenth August at five in the evening. The fee is eight hundred rupees. Anything else I can help you with?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Either branch is fine — just book the earliest evening one.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "I’ve booked the earliest evening slot for you: Monday, seventeenth August, five o’clock in the evening with Dr. Meera Shridhar at Indiranagar. You’re all set. Is there anything else you’d like to ask?",
+          "lang": "en"
+        }
+      ],
+      "error": null
+    },
+    {
+      "scenario_id": "book_after_work_hi",
+      "language": "hi",
+      "category": "underspecified_time",
+      "passed": true,
+      "completed": true,
+      "disposition": "booked",
+      "turns_total": 2,
+      "turns_to_completion": 2,
+      "tool_calls": [
+        {
+          "name": "get_availability",
+          "args": {
+            "specialty": "General Medicine",
+            "doctor_name": null,
+            "branch": null,
+            "date_from": "2026-08-18",
+            "date_to": "2026-08-18",
+            "weekdays": null,
+            "after_time": "16:30",
+            "before_time": null,
+            "near_time": null,
+            "earliest": false
+          }
+        },
+        {
+          "name": "book_appointment",
+          "args": {
+            "patient_full_name": "Vikas Sharma",
+            "doctor_name": "Dr. Rajendra S",
+            "branch": "indiranagar",
+            "date": "2026-08-18",
+            "start_time": "17:00",
+            "reason": null,
+            "patient_phone": "+919810000003"
+          }
+        }
+      ],
+      "tool_expectation_failures": [],
+      "db_assertion_failures": [],
+      "redundant_questions": [],
+      "language_violations": [],
+      "script_language_violations": [],
+      "hindi_quality": 5,
+      "code_switch_naturalness": null,
+      "llm_ttft_ms": [
+        901.8
+      ],
+      "turn_wall_ms": [
+        2938.6,
+        2532.7
+      ],
+      "transcript": [
+        {
+          "role": "agent",
+          "text": "Hello! Apollo Clinic, Indiranagar and HSR Layout — this is Asha. How may I help you?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "नमस्ते, मुझे Tuesday 18 August को जनरल फिजिशियन से मिलना है। ऑफिस के बाद शाम को, साढ़े चार बजे के बाद का कोई स्लॉट है?",
+          "lang": "hi"
+        },
+        {
+          "role": "agent",
+          "text": "मंगलवार, अठारह अगस्त को शाम साढ़े चार बजे के बाद ये स्लॉट्स हैं: HSR Layout में Dr. Thara Nair K के पास साढ़े चार, पौन पाँच, या पाँच बजे। Indiranagar में Dr. Rajendra S के पास पाँच या पाँच पंद्रह पर मिल सकता है। आप किस डॉक्टर और ब्रांच में लेना चाहेंगे?",
+          "lang": "hi"
+        },
+        {
+          "role": "user",
+          "text": "पाँच बजे वाला ठीक रहेगा। मेरा नाम विकास शर्मा है।",
+          "lang": "hi"
+        },
+        {
+          "role": "agent",
+          "text": "Vikas Sharma के लिए आपका अपॉइंटमेंट बुक हो गया है — मंगलवार, अठारह अगस्त, शाम पाँच बजे, Dr. Rajendra S के पास, Apollo Clinic Indiranagar में। फीस छह सौ रुपये है। और कुछ पूछना है?",
+          "lang": "hi"
+        }
+      ],
+      "error": null
+    },
+    {
+      "scenario_id": "book_thursday_morning_mixed",
+      "language": "mixed",
+      "category": "underspecified_time",
+      "passed": true,
+      "completed": true,
+      "disposition": "booked",
+      "turns_total": 2,
+      "turns_to_completion": 2,
+      "tool_calls": [
+        {
+          "name": "get_availability",
+          "args": {
+            "specialty": "Paediatrics",
+            "doctor_name": null,
+            "branch": null,
+            "date_from": "2026-08-20",
+            "date_to": null,
+            "weekdays": "Thursday",
+            "after_time": "08:00",
+            "before_time": "12:00",
+            "near_time": null,
+            "earliest": false
+          }
+        },
+        {
+          "name": "book_appointment",
+          "args": {
+            "patient_full_name": "Aarav Khanna",
+            "doctor_name": "Dr. Himabindu Gali",
+            "branch": "Apollo Clinic HSR Layout",
+            "date": "2026-08-20",
+            "start_time": "10:30",
+            "reason": null,
+            "patient_phone": "+919810000004"
+          }
+        }
+      ],
+      "tool_expectation_failures": [],
+      "db_assertion_failures": [],
+      "redundant_questions": [],
+      "language_violations": [
+        {
+          "turn": 2,
+          "type": "unnatural_mix",
+          "note": "Agent uses 'yani' and then switches to 'बीस अगस्त' (Devanagari), which is inconsistent with the rest of the Latin-script Hindi and Hinglish. This can break the natural flow for a Hinglish speaker."
+        },
+        {
+          "turn": 4,
+          "type": "unnatural_mix",
+          "note": "Agent uses 'बीस अगस्त' and 'दस बजे तीस मिनट' in Devanagari, while the rest of the reply is in Latin-script Hinglish. This is an unnatural mix and can be confusing for the user."
+        }
+      ],
+      "script_language_violations": [],
+      "hindi_quality": 4,
+      "code_switch_naturalness": 4,
+      "llm_ttft_ms": [
+        839.0
+      ],
+      "turn_wall_ms": [
+        2703.9,
+        2443.5
+      ],
+      "transcript": [
+        {
+          "role": "agent",
+          "text": "Hello! Apollo Clinic, Indiranagar and HSR Layout — this is Asha. How may I help you?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Hi, mujhe apne bete ke liye pediatrician ka appointment chahiye. Any Thursday morning is great — koi bhi Thursday chalega.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Aapke bete ke liye agla Thursday, yani बीस अगस्त ko Dr. Himabindu Gali ke paas HSR Layout branch mein subah das baje, ya das pandrah, ya das tees baje ka slot mil sakta hai. Kaunsa time aapko theek lagega?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Thursday 10:30 perfect hai. Bete ka naam Aarav Khanna hai.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Aarav Khanna ka appointment Thursday, बीस अगस्त ko subah दस बजे तीस मिनट par Dr. Himabindu Gali ke saath Apollo Clinic HSR Layout branch mein confirm ho gaya hai. Fees सात सौ रुपये hai. Aur kuch madad chahiye?",
+          "lang": "mixed"
+        }
+      ],
+      "error": null
+    },
+    {
+      "scenario_id": "earliest_cross_branch_en",
+      "language": "en",
+      "category": "earliest_slot",
+      "passed": true,
+      "completed": true,
+      "disposition": "booked",
+      "turns_total": 2,
+      "turns_to_completion": 2,
+      "tool_calls": [
+        {
+          "name": "get_availability",
+          "args": {
+            "specialty": "Dermatology",
+            "doctor_name": null,
+            "branch": null,
+            "date_from": "2026-08-19",
+            "date_to": "2026-08-19",
+            "weekdays": null,
+            "after_time": null,
+            "before_time": null,
+            "near_time": null,
+            "earliest": true
+          }
+        },
+        {
+          "name": "book_appointment",
+          "args": {
+            "patient_full_name": "Kavya Nair",
+            "doctor_name": "Dr. Tejashwini S M",
+            "branch": "hsr",
+            "date": "2026-08-19",
+            "start_time": "11:00",
+            "reason": null,
+            "patient_phone": "+919810000005"
+          }
+        }
+      ],
+      "tool_expectation_failures": [],
+      "db_assertion_failures": [],
+      "redundant_questions": [],
+      "language_violations": [],
+      "script_language_violations": [],
+      "hindi_quality": null,
+      "code_switch_naturalness": null,
+      "llm_ttft_ms": [
+        954.3
+      ],
+      "turn_wall_ms": [
+        2462.3,
+        2668.9
+      ],
+      "transcript": [
+        {
+          "role": "agent",
+          "text": "Hello! Apollo Clinic, Indiranagar and HSR Layout — this is Asha. How may I help you?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "What's the earliest dermatology appointment you have on Wednesday 19 August? Any branch works for me.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "The earliest dermatology appointment on Wednesday, nineteenth August is at eleven in the morning with Dr. Tejashwini S M at Apollo Clinic HSR Layout. Would you like to book this slot? If you prefer a little later, I have eleven fifteen and eleven thirty as well.",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Great, book that one. Kavya Nair.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Your appointment is booked for Kavya Nair with Dr. Tejashwini S M, Wednesday, nineteenth August, eleven in the morning at Apollo Clinic HSR Layout. The fee is seven hundred rupees. Anything else I can help you with?",
+          "lang": "en"
+        }
+      ],
+      "error": null
+    },
+    {
+      "scenario_id": "returning_patient_en",
+      "language": "en",
+      "category": "returning_patient",
+      "passed": true,
+      "completed": true,
+      "disposition": "booked",
+      "turns_total": 2,
+      "turns_to_completion": 2,
+      "tool_calls": [
+        {
+          "name": "get_availability",
+          "args": {
+            "specialty": "Dermatology",
+            "doctor_name": null,
+            "branch": null,
+            "date_from": "2026-08-21",
+            "date_to": "2026-08-21",
+            "weekdays": null,
+            "after_time": "08:00",
+            "before_time": "12:00",
+            "near_time": null,
+            "earliest": false
+          }
+        },
+        {
+          "name": "book_appointment",
+          "args": {
+            "patient_full_name": "Rakesh Gupta",
+            "doctor_name": "Dr. Meera Shridhar",
+            "branch": "Apollo Clinic Indiranagar",
+            "date": "2026-08-21",
+            "start_time": "10:00",
+            "reason": null,
+            "patient_phone": "+919810000006"
+          }
+        }
+      ],
+      "tool_expectation_failures": [],
+      "db_assertion_failures": [],
+      "redundant_questions": [],
+      "language_violations": [],
+      "script_language_violations": [],
+      "hindi_quality": null,
+      "code_switch_naturalness": null,
+      "llm_ttft_ms": [
+        984.5
+      ],
+      "turn_wall_ms": [
+        2730.2,
+        2782.6
+      ],
+      "transcript": [
+        {
+          "role": "agent",
+          "text": "Hello, Apollo Clinic, this is Asha. Good to hear from you again, Rakesh! How can I help today?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Hi, I'd like to see a skin specialist on Friday 21 August, sometime in the morning.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Rakesh, I have slots with Dr. Meera Shridhar at Indiranagar on Friday, 21st August—10 o’clock, 10:15, or 10:30 in the morning. There’s also Dr. Tejashwini S M at HSR Layout at 11 AM. Which one would you like to book?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Yes it's for me. The first morning slot is fine.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Your appointment is booked, Rakesh. Dr. Meera Shridhar will see you at Apollo Clinic Indiranagar on Friday, 21st August at 10 in the morning. The fee is eight hundred rupees. Anything else I can help you with?",
+          "lang": "en"
+        }
+      ],
+      "error": null
+    },
+    {
+      "scenario_id": "family_line_hi",
+      "language": "hi",
+      "category": "identity",
+      "passed": true,
+      "completed": true,
+      "disposition": "booked",
+      "turns_total": 3,
+      "turns_to_completion": 3,
+      "tool_calls": [
+        {
+          "name": "get_availability",
+          "args": {
+            "specialty": "Dermatology",
+            "doctor_name": null,
+            "branch": null,
+            "date_from": "2026-08-17",
+            "date_to": "2026-08-17",
+            "weekdays": null,
+            "after_time": "15:00",
+            "before_time": null,
+            "near_time": null,
+            "earliest": false
+          }
+        },
+        {
+          "name": "book_appointment",
+          "args": {
+            "patient_full_name": "Meena Gupta",
+            "doctor_name": "Dr. Meera Shridhar",
+            "branch": "Apollo Clinic Indiranagar",
+            "date": "2026-08-17",
+            "start_time": "17:00",
+            "reason": null,
+            "patient_phone": "+919810000007"
+          }
+        }
+      ],
+      "tool_expectation_failures": [],
+      "db_assertion_failures": [],
+      "redundant_questions": [],
+      "language_violations": [],
+      "script_language_violations": [],
+      "hindi_quality": 5,
+      "code_switch_naturalness": 5,
+      "llm_ttft_ms": [
+        999.5
+      ],
+      "turn_wall_ms": [
+        1241.1,
+        2676.1,
+        2661.3
+      ],
+      "transcript": [
+        {
+          "role": "agent",
+          "text": "Hello! Apollo Clinic, Indiranagar and HSR Layout — this is Asha. How may I help you?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "नमस्ते, अगले हफ़्ते डॉक्टर से अपॉइंटमेंट चाहिए।",
+          "lang": "hi"
+        },
+        {
+          "role": "agent",
+          "text": "नमस्ते! किस डॉक्टर से मिलना है और कौन सा क्लिनिक — इंदिरानगर या एचएसआर लेआउट? आपके लिए बुक कर देती हूँ।",
+          "lang": "hi"
+        },
+        {
+          "role": "user",
+          "text": "मीना गुप्ता के लिए, स्किन की डॉक्टर से दिखाना है। Monday 17 August शाम को हो पाएगा क्या?",
+          "lang": "hi"
+        },
+        {
+          "role": "agent",
+          "text": "मीना गुप्ता के लिए सोमवार, 17 अगस्त शाम को Dr. Meera Shridhar से इंदिरानगर में 5 बजे, 5:15 या 5:30 पर स्लॉट मिल सकता है। क्या 5 बजे का समय बुक कर दूँ? फीस आठ सौ रुपये रहेगी।",
+          "lang": "hi"
+        },
+        {
+          "role": "user",
+          "text": "हाँ, जो पहला स्लॉट है वही पक्का कर दीजिए।",
+          "lang": "hi"
+        },
+        {
+          "role": "agent",
+          "text": "मीना गुप्ता के लिए सोमवार, 17 अगस्त शाम 5 बजे Dr. Meera Shridhar के पास Apollo Clinic इंदिरानगर में अपॉइंटमेंट बुक हो गया है। फीस आठ सौ रुपये रहेगी। कोई और मदद चाहिए आपको?",
+          "lang": "hi"
+        }
+      ],
+      "error": null
+    },
+    {
+      "scenario_id": "dropped_call_resume_en",
+      "language": "en",
+      "category": "dropped_call",
+      "passed": true,
+      "completed": true,
+      "disposition": "booked",
+      "turns_total": 2,
+      "turns_to_completion": 2,
+      "tool_calls": [
+        {
+          "name": "book_appointment",
+          "args": {
+            "patient_full_name": "Sameer Joshi",
+            "doctor_name": "Dr. Meera Shridhar",
+            "branch": "indiranagar",
+            "date": "2026-08-21",
+            "start_time": "17:30",
+            "reason": null,
+            "patient_phone": "+919810000008"
+          }
+        }
+      ],
+      "tool_expectation_failures": [],
+      "db_assertion_failures": [],
+      "redundant_questions": [],
+      "language_violations": [],
+      "script_language_violations": [],
+      "hindi_quality": null,
+      "code_switch_naturalness": null,
+      "llm_ttft_ms": [
+        721.6
+      ],
+      "turn_wall_ms": [
+        1477.4,
+        5327.9
+      ],
+      "transcript": [
+        {
+          "role": "agent",
+          "text": "Sorry about that — looks like we got disconnected. Let's pick up right where we left off.",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Hi — sorry, I think my call just dropped a minute ago.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "No problem at all, sorry about that! We got disconnected earlier when we were looking at Thursday, five thirty in the evening with Dr. Meera Shridhar at Indiranagar for Sameer Joshi. Would you like me to go ahead and book that slot now?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Yes exactly, that slot. Please confirm it.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Your appointment is confirmed for Sameer Joshi with Dr. Meera Shridhar at Apollo Clinic Indiranagar, on Friday, 21st August at five thirty in the evening. The consultation fee is eight hundred rupees.\n\nIs there anything else I can help you with today?",
+          "lang": "en"
+        }
+      ],
+      "error": null
+    },
+    {
+      "scenario_id": "callback_recognition_en",
+      "language": "en",
+      "category": "callback",
+      "passed": true,
+      "completed": true,
+      "disposition": "rescheduled",
+      "turns_total": 3,
+      "turns_to_completion": 3,
+      "tool_calls": [
+        {
+          "name": "get_availability",
+          "args": {
+            "specialty": "Obstetrics & Gynaecology",
+            "doctor_name": "Dr. Nalini K S",
+            "branch": "hsr",
+            "date_from": "2026-08-21",
+            "date_to": "2026-08-21",
+            "weekdays": null,
+            "after_time": "08:00",
+            "before_time": "12:00",
+            "near_time": null,
+            "earliest": false
+          }
+        },
+        {
+          "name": "reschedule_appointment",
+          "args": {
+            "appointment_id": "fecfd5fe-50b3-4ad3-bc17-d0e4e496658c",
+            "new_date": "2026-08-21",
+            "new_start_time": "10:40",
+            "doctor_name": "Dr. Nalini K S",
+            "branch": "hsr"
+          }
+        }
+      ],
+      "tool_expectation_failures": [],
+      "db_assertion_failures": [],
+      "redundant_questions": [],
+      "language_violations": [],
+      "script_language_violations": [],
+      "hindi_quality": null,
+      "code_switch_naturalness": null,
+      "llm_ttft_ms": [
+        849.1
+      ],
+      "turn_wall_ms": [
+        2160.7,
+        2980.1,
+        2491.3
+      ],
+      "transcript": [
+        {
+          "role": "agent",
+          "text": "Hello, Apollo Clinic. Thanks for calling back — I was trying to reach you earlier about Reschedule your gynaecology appointment with Dr. Nalini K S — she is unavailable at your booked time. Is this a good time?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Hello, I got a missed call from this number?",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Hi Divya, thanks for calling back. I was trying to reach you about your gynaecology appointment with Dr. Nalini K S at Apollo Clinic HSR Layout. She’s unavailable at your booked time on Wednesday, 19th August at 10 AM. Would you like me to help you reschedule to another slot with her, or would you prefer a different doctor?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Oh I see, no problem. Can we move it to Friday 21 August morning instead?",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Divya, Dr. Nalini is available on Friday, 21st August in the morning at Apollo Clinic HSR Layout. I can move your appointment to 10 AM, or if you prefer a little later, there are slots at 10:20 and 10:40 as well. Would you like to go ahead with 10 AM?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Ten forty works. Please confirm.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Your appointment is now confirmed for Friday, 21st August at 10:40 in the morning with Dr. Nalini K S at Apollo Clinic HSR Layout. Is there anything else I can help you with today?",
+          "lang": "en"
+        }
+      ],
+      "error": null
+    },
+    {
+      "scenario_id": "stale_availability_recheck_en",
+      "language": "en",
+      "category": "stale_availability",
+      "passed": true,
+      "completed": true,
+      "disposition": "booked",
+      "turns_total": 3,
+      "turns_to_completion": 3,
+      "tool_calls": [
+        {
+          "name": "get_availability",
+          "args": {
+            "specialty": "General Medicine",
+            "doctor_name": null,
+            "branch": null,
+            "date_from": "2026-08-18",
+            "date_to": "2026-08-18",
+            "weekdays": null,
+            "after_time": "08:00",
+            "before_time": "12:00",
+            "near_time": null,
+            "earliest": false
+          }
+        },
+        {
+          "name": "get_availability",
+          "args": {
+            "specialty": "General Medicine",
+            "doctor_name": null,
+            "branch": null,
+            "date_from": "2026-08-20",
+            "date_to": "2026-08-20",
+            "weekdays": null,
+            "after_time": "16:00",
+            "before_time": "20:00",
+            "near_time": null,
+            "earliest": false
+          }
+        },
+        {
+          "name": "get_availability",
+          "args": {
+            "specialty": "General Medicine",
+            "doctor_name": null,
+            "branch": null,
+            "date_from": "2026-08-20",
+            "date_to": "2026-08-20",
+            "weekdays": null,
+            "after_time": "18:00",
+            "before_time": "20:00",
+            "near_time": "18:00",
+            "earliest": false
+          }
+        },
+        {
+          "name": "book_appointment",
+          "args": {
+            "patient_full_name": "Nikhil Bansal",
+            "doctor_name": "Dr. Rajendra S",
+            "branch": "indiranagar",
+            "date": "2026-08-20",
+            "start_time": "18:00",
+            "reason": null,
+            "patient_phone": "+919810000010"
+          }
+        }
+      ],
+      "tool_expectation_failures": [],
+      "db_assertion_failures": [],
+      "redundant_questions": [],
+      "language_violations": [],
+      "script_language_violations": [],
+      "hindi_quality": null,
+      "code_switch_naturalness": null,
+      "llm_ttft_ms": [
+        889.3
+      ],
+      "turn_wall_ms": [
+        3045.4,
+        2447.1,
+        4032.7
+      ],
+      "transcript": [
+        {
+          "role": "agent",
+          "text": "Hello! Apollo Clinic, Indiranagar and HSR Layout — this is Asha. How may I help you?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Do you have a general physician slot on Tuesday 18 August morning?",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Yes, we have slots on Tuesday, 18th August morning. You can see Dr. Rajendra S at Indiranagar or Dr. Bolisetty Sudhakar at HSR Layout. The earliest available is 9:00 in the morning at either branch. Would you prefer Indiranagar or HSR Layout?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Hmm, actually Thursday evening suits me better.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Thursday evening, you can see Dr. Rajendra S at Indiranagar or Dr. Thara Nair K at HSR Layout. The earliest is 4:00 PM at HSR Layout, or 5:00 PM at either branch. Which branch would you like to book?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "The 6 pm one please. Nikhil Bansal.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Your appointment is booked for Nikhil Bansal with Dr. Rajendra S at Apollo Clinic Indiranagar, Thursday 20th August, 6:00 PM. The fee is six hundred rupees. Anything else I can help you with?",
+          "lang": "en"
+        }
+      ],
+      "error": null
+    },
+    {
+      "scenario_id": "slot_taken_race_en",
+      "language": "en",
+      "category": "slot_race",
+      "passed": true,
+      "completed": true,
+      "disposition": "booked",
+      "turns_total": 3,
+      "turns_to_completion": 3,
+      "tool_calls": [
+        {
+          "name": "get_availability",
+          "args": {
+            "specialty": "Orthopaedics",
+            "doctor_name": "Dr. Rajeev S Ghat",
+            "branch": null,
+            "date_from": "2026-08-22",
+            "date_to": "2026-08-22",
+            "weekdays": null,
+            "after_time": "08:00",
+            "before_time": "12:00",
+            "near_time": null,
+            "earliest": true
+          }
+        },
+        {
+          "name": "book_appointment",
+          "args": {
+            "patient_full_name": "Arjun Reddy",
+            "doctor_name": "Dr. Rajeev S Ghat",
+            "branch": "Apollo Clinic HSR Layout",
+            "date": "2026-08-22",
+            "start_time": "09:30",
+            "reason": null,
+            "patient_phone": "+919810000011"
+          }
+        },
+        {
+          "name": "book_appointment",
+          "args": {
+            "patient_full_name": "Arjun Reddy",
+            "doctor_name": "Dr. Rajeev S Ghat",
+            "branch": "Apollo Clinic HSR Layout",
+            "date": "2026-08-22",
+            "start_time": "10:10",
+            "reason": null,
+            "patient_phone": "+919810000011"
+          }
+        }
+      ],
+      "tool_expectation_failures": [],
+      "db_assertion_failures": [],
+      "redundant_questions": [],
+      "language_violations": [],
+      "script_language_violations": [],
+      "hindi_quality": null,
+      "code_switch_naturalness": null,
+      "llm_ttft_ms": [
+        1095.0
+      ],
+      "turn_wall_ms": [
+        2742.3,
+        2513.5,
+        2638.1
+      ],
+      "transcript": [
+        {
+          "role": "agent",
+          "text": "Hello! Apollo Clinic, Indiranagar and HSR Layout — this is Asha. How may I help you?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "I need the earliest orthopaedic slot on Saturday 22 August morning please.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "The earliest orthopaedic slot on Saturday, 22nd August is at 9:30 in the morning with Dr. Rajeev S Ghat at Apollo Clinic HSR Layout. Would you like me to book this for you? If you prefer a little later, there’s also 9:50 and 10:10 available.",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Yes, book that first one — the name is Arjun Reddy.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Sorry, that 9:30 slot just got taken. The next available times with Dr. Rajeev S Ghat on Saturday are 10:10, 10:30, or 10:50 in the morning at HSR Layout. Should I book 10:10 for Arjun Reddy?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "Alright, whatever is next available then. Same name.",
+          "lang": "en"
+        },
+        {
+          "role": "agent",
+          "text": "Your appointment is confirmed for Arjun Reddy with Dr. Rajeev S Ghat, Orthopaedics, at Apollo Clinic HSR Layout on Saturday, 22nd August at 10:10 in the morning. The fee is nine hundred rupees. Anything else I can help you with?",
+          "lang": "en"
+        }
+      ],
+      "error": null
+    },
+    {
+      "scenario_id": "human_handoff_hi",
+      "language": "hi",
+      "category": "escalation",
+      "passed": true,
+      "completed": false,
+      "disposition": null,
+      "turns_total": 2,
+      "turns_to_completion": null,
+      "tool_calls": [
+        {
+          "name": "log_followup",
+          "args": {
+            "category": "billing",
+            "details": "Caller Suresh Pillai has a complaint about a previous bill and wants to speak to staff.",
+            "patient_name": "Suresh Pillai"
+          }
+        }
+      ],
+      "tool_expectation_failures": [],
+      "db_assertion_failures": [],
+      "redundant_questions": [],
+      "language_violations": [
+        {
+          "turn": 2,
+          "type": "unnatural_mix",
+          "note": "Agent uses 'AI रिसेप्शनिस्ट', 'appointment booking, reschedule या cancel'—unnecessary English phrases in a pure Hindi turn. Should use natural Hindi equivalents for these terms."
+        },
+        {
+          "turn": 4,
+          "type": "unnatural_mix",
+          "note": "Agent uses 'वर्किंग ऑवर्स'—unnatural English phrase in a Hindi reply. Should use 'कार्य समय' or similar."
+        }
+      ],
+      "script_language_violations": [],
+      "hindi_quality": 3,
+      "code_switch_naturalness": null,
+      "llm_ttft_ms": [
+        768.3
+      ],
+      "turn_wall_ms": [
+        1407.8,
+        2508.1
+      ],
+      "transcript": [
+        {
+          "role": "agent",
+          "text": "Hello! Apollo Clinic, Indiranagar and HSR Layout — this is Asha. How may I help you?",
+          "lang": "en"
+        },
+        {
+          "role": "user",
+          "text": "हैलो, क्या मैं किसी इंसान से बात कर रहा हूँ या आप बॉट हैं?",
+          "lang": "hi"
+        },
+        {
+          "role": "agent",
+          "text": "नमस्ते, मैं Apollo Clinic की AI रिसेप्शनिस्ट हूँ — आपकी कॉल का जवाब देने के लिए यहाँ हूँ। आप मुझे appointment booking, reschedule या cancel करने के लिए कुछ भी पूछ सकते हैं। कैसे मदद कर सकती हूँ?",
+          "lang": "hi"
+        },
+        {
+          "role": "user",
+          "text": "ठीक है। मुझे अपने पिछले बिल के बारे में शिकायत करनी है, किसी स्टाफ से बात करवाइए। मेरा नाम सुरेश पिल्लई है।",
+          "lang": "hi"
+        },
+        {
+          "role": "agent",
+          "text": "मैं आपकी बात नोट कर रही हूँ, सुरेश पिल्लई जी। हमारा स्टाफ आपको इसी नंबर पर कॉल करेगा, आमतौर पर आज के वर्किंग ऑवर्स में ही। और कोई मदद चाहिए आपको?",
+          "lang": "hi"
+        }
+      ],
+      "error": null
+    }
+  ]
+}
