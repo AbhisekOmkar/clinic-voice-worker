@@ -1,0 +1,33 @@
+id: callback_recognition_en
+language: en
+category: callback
+description: >
+  The clinic called the patient and got no answer. When the patient calls
+  back, the agent must recognise it as a callback and carry the original
+  purpose forward (a reschedule), not start cold.
+caller:
+  phone: "+919810000009"
+seed:
+  appointments:
+    - {patient_name: "Divya Menon", phone: "+919810000009", practitioner_id: dr-nalini-ks, branch_id: br-hsr, date: "{next_wednesday}", start_hm: "10:00"}
+  outbound_call:
+    purpose: "Reschedule your gynaecology appointment with Dr. Nalini K S — she is unavailable at your booked time"
+    context: {reason: "practitioner_unavailable"}
+turns:
+  - user: "Hello, I got a missed call from this number?"
+  - user: "Oh I see, no problem. Can we move it to {next_friday_speakable} morning instead?"
+    expect_tools:
+      - name: get_availability
+  - user: "Ten forty works. Please confirm."
+    expect_tools:
+      - name: reschedule_appointment
+expect:
+  completed: true
+  disposition: rescheduled
+  max_turns_to_completion: 3
+  booking:
+    patient_name: "Divya Menon"
+    practitioner_id: "dr-nalini-ks"
+    date: "{next_friday}"
+    start_hm: "10:40"
+judges: [redundant, language]

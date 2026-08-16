@@ -1,0 +1,29 @@
+id: stale_availability_recheck_en
+language: en
+category: stale_availability
+description: >
+  When the caller changes the requested day, the agent must re-run the
+  availability tool against live data — answering from the earlier tool result
+  still in context is the failure this scenario exists to catch.
+caller:
+  phone: "+919810000010"
+turns:
+  - user: "Do you have a general physician slot on {next_tuesday_speakable} morning?"
+    expect_tools:
+      - name: get_availability
+  - user: "Hmm, actually Thursday evening suits me better."
+    expect_tools:
+      - name: get_availability
+        args_contains:
+          date_from: "{next_thursday}"
+  - user: "The 6 pm one please. Nikhil Bansal."
+expect:
+  completed: true
+  disposition: booked
+  max_turns_to_completion: 3
+  booking:
+    patient_name: "Nikhil Bansal"
+    practitioner_id: "dr-rajendra-s"
+    date: "{next_thursday}"
+    start_hm: "18:00"
+judges: [redundant, language]

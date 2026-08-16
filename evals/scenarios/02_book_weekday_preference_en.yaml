@@ -1,0 +1,22 @@
+id: book_weekday_preference_en
+language: en
+category: underspecified_time
+description: '"Mondays and Wednesdays work well for me" -> weekday-preference availability search'
+caller:
+  phone: "+919810000002"
+turns:
+  - user: "Hello, I want to see a dermatologist but only Mondays and Wednesdays work well for me."
+    expect_tools:
+      - name: get_availability
+        args_contains:
+          weekdays: "monday"
+  - user: "Monday evening please, whichever slot. My name is Rohit Malhotra."
+  - user: "Either branch is fine — just book the earliest evening one."
+expect:
+  completed: true
+  disposition: booked
+  max_turns_to_completion: 3
+  booking:
+    patient_name: "Rohit Malhotra"
+    date: "{next_monday}"
+judges: [redundant, language]

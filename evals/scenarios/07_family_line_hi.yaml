@@ -1,0 +1,27 @@
+id: family_line_hi
+language: hi
+category: identity
+description: >
+  Two patients share one phone number (family line). The agent must ask WHO the
+  appointment is for instead of assuming — and must not demand extra
+  verification beyond the name.
+caller:
+  phone: "+919810000007"
+seed:
+  appointments:
+    - {patient_name: "Rakesh Gupta", phone: "+919810000007", practitioner_id: dr-rajendra-s,  branch_id: br-indiranagar, date: "{next_monday}", start_hm: "09:30"}
+    - {patient_name: "Meena Gupta",  phone: "+919810000007", practitioner_id: dr-priti-shanker, branch_id: br-indiranagar, date: "{next_tuesday}", start_hm: "10:30"}
+turns:
+  - user: "नमस्ते, अगले हफ़्ते डॉक्टर से अपॉइंटमेंट चाहिए।"
+  - user: "मीना गुप्ता के लिए, स्किन की डॉक्टर से दिखाना है। {next_monday_speakable} शाम को हो पाएगा क्या?"
+    expect_tools:
+      - name: get_availability
+  - user: "हाँ, जो पहला स्लॉट है वही पक्का कर दीजिए।"
+expect:
+  completed: true
+  disposition: booked
+  max_turns_to_completion: 4
+  booking:
+    patient_name: "Meena Gupta"
+    date: "{next_monday}"
+judges: [redundant, language]

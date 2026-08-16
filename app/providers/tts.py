@@ -1,6 +1,6 @@
 """TTS factory.
 
-Cartesia sonic-2 with a native Hinglish voice ("Arushi"): one voice that
+Cartesia sonic-3 with a native Hinglish voice ("Arushi"): one voice that
 renders both English and Hindi (Devanagari or romanised) naturally, so the
 agent's own code-switching doesn't sound like two stitched engines.
 """

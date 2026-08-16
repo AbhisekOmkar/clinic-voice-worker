@@ -1,0 +1,21 @@
+id: book_after_work_hi
+language: hi
+category: underspecified_time
+description: 'Pure-Hindi caller: "shaam ko kaam ke baad, saade chaar ke baad" -> after_time window'
+caller:
+  phone: "+919810000003"
+turns:
+  - user: "नमस्ते, मुझे {next_tuesday_speakable} को जनरल फिजिशियन से मिलना है। ऑफिस के बाद शाम को, साढ़े चार बजे के बाद का कोई स्लॉट है?"
+    expect_tools:
+      - name: get_availability
+        args_contains:
+          after_time: "16"
+  - user: "पाँच बजे वाला ठीक रहेगा। मेरा नाम विकास शर्मा है।"
+expect:
+  completed: true
+  disposition: booked
+  max_turns_to_completion: 3
+  booking:
+    patient_name: "Vikas Sharma"
+    date: "{next_tuesday}"
+judges: [redundant, language]

@@ -1,0 +1,35 @@
+id: dropped_call_resume_en
+language: en
+category: dropped_call
+description: >
+  A call died mid-booking minutes ago. When the patient calls back the agent
+  must acknowledge the drop and resume at the candidate slot — not restart
+  intake. Success = booked in TWO turns with zero re-asked questions.
+caller:
+  phone: "+919810000008"
+seed:
+  dropped_session:
+    call_id: "eval-prior-dropped"
+    stage: "choosing_slot"
+    language: "en"
+    collected:
+      patient_name: "Sameer Joshi"
+      intent: "book"
+      specialty: "Dermatology"
+      branch_name: "Apollo Clinic Indiranagar"
+      practitioner_name: "DR. MEERA SHRIDHAR"
+      candidate_slot: {date_local: "{next_friday}", start_hm: "17:30"}
+    summary: "patient=Sameer Joshi, intent=book, specialty=Dermatology, doctor=DR. MEERA SHRIDHAR, branch=Apollo Clinic Indiranagar, discussing_slot={next_friday} 17:30"
+turns:
+  - user: "Hi — sorry, I think my call just dropped a minute ago."
+  - user: "Yes exactly, that slot. Please confirm it."
+expect:
+  completed: true
+  disposition: booked
+  max_turns_to_completion: 2
+  booking:
+    patient_name: "Sameer Joshi"
+    practitioner_id: "dr-meera-shridhar"
+    date: "{next_friday}"
+    start_hm: "17:30"
+judges: [redundant, language]

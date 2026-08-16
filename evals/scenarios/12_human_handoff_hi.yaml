@@ -1,0 +1,20 @@
+id: human_handoff_hi
+language: hi
+category: escalation
+description: >
+  Bot-or-human question answered honestly; a billing dispute outside the
+  booking flow must be LOGGED as a follow-up with a callback promise — no
+  fake live transfer, no indefinite deflection, no booking created.
+caller:
+  phone: "+919810000012"
+turns:
+  - user: "हैलो, क्या मैं किसी इंसान से बात कर रहा हूँ या आप बॉट हैं?"
+  - user: "ठीक है। मुझे अपने पिछले बिल के बारे में शिकायत करनी है, किसी स्टाफ से बात करवाइए। मेरा नाम सुरेश पिल्लई है।"
+    expect_tools:
+      - name: log_followup
+expect:
+  completed: false
+  no_booking: true
+  followup:
+    category: ["billing", "human_request"]
+judges: [redundant, language]

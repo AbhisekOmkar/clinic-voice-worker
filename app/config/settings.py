@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     llm_temperature: float = 0.3
 
     tts_provider: str = "cartesia"
-    cartesia_model: str = "sonic-2"
+    cartesia_model: str = "sonic-3"
     cartesia_voice_id: str = "95d51f79-c397-46f9-b49a-23763d3eaa2d"  # "Arushi" — Hinglish bilingual
 
     # Turn taking / interruptions

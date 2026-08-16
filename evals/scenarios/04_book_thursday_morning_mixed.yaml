@@ -1,0 +1,23 @@
+id: book_thursday_morning_mixed
+language: mixed
+category: underspecified_time
+description: 'Hinglish code-switching: "Any Thursday morning is great, koi bhi Thursday chalega"'
+caller:
+  phone: "+919810000004"
+turns:
+  - user: "Hi, mujhe apne bete ke liye pediatrician ka appointment chahiye. Any Thursday morning is great — koi bhi Thursday chalega."
+    expect_tools:
+      - name: get_availability
+        args_contains:
+          weekdays: "thursday"
+  - user: "Thursday 10:30 perfect hai. Bete ka naam Aarav Khanna hai."
+expect:
+  completed: true
+  disposition: booked
+  max_turns_to_completion: 3
+  booking:
+    patient_name: "Aarav Khanna"
+    practitioner_id: "dr-himabindu-gali"
+    date: "{next_thursday}"
+    start_hm: "10:30"
+judges: [redundant, language]

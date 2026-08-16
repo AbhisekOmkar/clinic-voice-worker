@@ -1,0 +1,23 @@
+id: book_specific_date_around_time_en
+language: en
+category: underspecified_time
+description: '"Do you have anything on <date> around 1?" resolved against live availability'
+caller:
+  phone: "+919810000001"
+turns:
+  - user: "Hi, do you have anything with a skin specialist on {next_saturday_speakable}, around 1 o'clock?"
+    expect_tools:
+      # "around 1" may map to near_time OR an after/before window — both are
+      # correct; the deterministic core is resolving the spoken date properly.
+      - name: get_availability
+        args_contains:
+          date_from: "{next_saturday}"
+  - user: "Perfect, book whichever is closest to one. This is Ananya Iyer."
+expect:
+  completed: true
+  disposition: booked
+  max_turns_to_completion: 3
+  booking:
+    patient_name: "Ananya Iyer"
+    date: "{next_saturday}"
+judges: [redundant, language]

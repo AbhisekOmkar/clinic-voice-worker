@@ -1,0 +1,29 @@
+id: slot_taken_race_en
+language: en
+category: slot_race
+description: >
+  The offered slot gets booked by someone else between offer and confirmation
+  (done out-of-band by the harness). The booking write must fail safely, and
+  the agent must recover gracefully with a live re-check — not confirm a
+  booking that silently failed.
+caller:
+  phone: "+919810000011"
+turns:
+  - user: "I need the earliest orthopaedic slot on {next_saturday_speakable} morning please."
+    expect_tools:
+      - name: get_availability
+    action_after: steal_first_offered_slot
+  - user: "Yes, book that first one — the name is Arjun Reddy."
+    expect_tools:
+      - name: book_appointment
+  - user: "Alright, whatever is next available then. Same name."
+expect:
+  completed: true
+  disposition: booked
+  max_turns_to_completion: 3
+  booked_differs_from_stolen: true
+  booking:
+    patient_name: "Arjun Reddy"
+    practitioner_id: "dr-rajeev-ghat"
+    date: "{next_saturday}"
+judges: [redundant, language]

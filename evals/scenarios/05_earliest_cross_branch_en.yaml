@@ -1,0 +1,36 @@
+id: earliest_cross_branch_en
+language: en
+category: earliest_slot
+description: >
+  Earliest-slot search must genuinely compare all practitioners and both branches.
+  Indiranagar's derm morning is fully booked; the true earliest that day is
+  Dr. Tejashwini 11:00 at HSR Layout. Anchoring on Indiranagar (or claiming
+  nothing is free) fails the scenario.
+caller:
+  phone: "+919810000005"
+seed:
+  appointments:
+    - {patient_name: "Filler One",   phone: "+919700000001", practitioner_id: dr-meera-shridhar, branch_id: br-indiranagar, date: "{next_wednesday}", start_hm: "10:00"}
+    - {patient_name: "Filler Two",   phone: "+919700000002", practitioner_id: dr-meera-shridhar, branch_id: br-indiranagar, date: "{next_wednesday}", start_hm: "10:30"}
+    - {patient_name: "Filler Three", phone: "+919700000003", practitioner_id: dr-meera-shridhar, branch_id: br-indiranagar, date: "{next_wednesday}", start_hm: "11:00"}
+    - {patient_name: "Filler Four",  phone: "+919700000004", practitioner_id: dr-meera-shridhar, branch_id: br-indiranagar, date: "{next_wednesday}", start_hm: "11:30"}
+    - {patient_name: "Filler Five",  phone: "+919700000005", practitioner_id: dr-meera-shridhar, branch_id: br-indiranagar, date: "{next_wednesday}", start_hm: "12:00"}
+    - {patient_name: "Filler Six",   phone: "+919700000006", practitioner_id: dr-meera-shridhar, branch_id: br-indiranagar, date: "{next_wednesday}", start_hm: "12:30"}
+turns:
+  - user: "What's the earliest dermatology appointment you have on {next_wednesday_speakable}? Any branch works for me."
+    expect_tools:
+      - name: get_availability
+        args_contains:
+          earliest: true
+  - user: "Great, book that one. Kavya Nair."
+expect:
+  completed: true
+  disposition: booked
+  max_turns_to_completion: 3
+  booking:
+    patient_name: "Kavya Nair"
+    practitioner_id: "dr-tejashwini-sm"
+    branch_id: "br-hsr"
+    date: "{next_wednesday}"
+    start_hm: "11:00"
+judges: [redundant, language]

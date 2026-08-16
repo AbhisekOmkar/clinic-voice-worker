@@ -24,12 +24,15 @@ async def log_followup(
         patient_name: The caller's name if known.
     """
     state = ctx.userdata
+    normalized = category.strip().lower().replace(" ", "_")
+    if normalized not in ("human_request", "clinical_concern", "billing", "other"):
+        normalized = "other"
     status, body = await ClinicGateway.create_followup(
         {
             "call_id": state.call_id,
             "phone": state.phone,
             "patient_name": patient_name or state.collected.get("patient_name"),
-            "category": category,
+            "category": normalized,
             "details": details,
             "language": state.language,
         }

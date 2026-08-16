@@ -1,0 +1,24 @@
+id: returning_patient_en
+language: en
+category: returning_patient
+description: >
+  Returning patient calls in: the agent must recognise the number, greet by
+  name, pull context, and never re-ask who they are.
+caller:
+  phone: "+919810000006"
+seed:
+  appointments:
+    - {patient_name: "Rakesh Gupta", phone: "+919810000006", practitioner_id: dr-rajendra-s, branch_id: br-indiranagar, date: "{next_monday}", start_hm: "17:00"}
+turns:
+  - user: "Hi, I'd like to see a skin specialist on {next_friday_speakable}, sometime in the morning."
+    expect_tools:
+      - name: get_availability
+  - user: "Yes it's for me. The first morning slot is fine."
+expect:
+  completed: true
+  disposition: booked
+  max_turns_to_completion: 3
+  booking:
+    patient_name: "Rakesh Gupta"
+    date: "{next_friday}"
+judges: [redundant, language]
