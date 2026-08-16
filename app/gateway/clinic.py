@@ -17,6 +17,18 @@ class ClinicGateway(BaseGateway):
             return {}
 
     @classmethod
+    async def agent_config(cls, agent_id: str | None = None) -> dict | None:
+        """Resolve the agent persona: a specific agent when the job asked for
+        one, else the active agent. None -> worker built-in defaults."""
+        try:
+            if agent_id:
+                return await cls.get(f"/agents/{agent_id}")
+            return await cls.get("/agents/active")
+        except Exception as exc:
+            logger.warning(f"agent_config unavailable, using worker defaults: {exc}")
+            return None
+
+    @classmethod
     async def availability(cls, **params) -> dict:
         clean = {k: v for k, v in params.items() if v not in (None, "", [])}
         return await cls.get("/availability", params=clean)

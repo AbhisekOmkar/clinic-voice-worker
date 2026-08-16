@@ -26,7 +26,16 @@ async def log_followup(
     state = ctx.userdata
     normalized = category.strip().lower().replace(" ", "_")
     if normalized not in ("human_request", "clinical_concern", "billing", "other"):
-        normalized = "other"
+        # LLMs drift into free text ("Billing/Payment") — map by keyword
+        # instead of losing the signal to "other".
+        if any(k in normalized for k in ("bill", "payment", "fee", "refund", "invoice")):
+            normalized = "billing"
+        elif any(k in normalized for k in ("human", "staff", "person", "transfer", "agent")):
+            normalized = "human_request"
+        elif any(k in normalized for k in ("clinic", "medical", "symptom", "health", "doctor")):
+            normalized = "clinical_concern"
+        else:
+            normalized = "other"
     status, body = await ClinicGateway.create_followup(
         {
             "call_id": state.call_id,

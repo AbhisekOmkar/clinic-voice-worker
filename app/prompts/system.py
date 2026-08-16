@@ -128,8 +128,10 @@ def build_context_block(state) -> str:
     return "\n".join(lines)
 
 
-def build_system_prompt(state) -> str:
-    return f"{BASE_PROMPT}\n{build_context_block(state)}"
+def build_system_prompt(state, base_prompt: str | None = None) -> str:
+    """Dashboard-managed agents can replace the base persona/policy; the live
+    context block is always appended by the worker regardless."""
+    return f"{base_prompt or BASE_PROMPT}\n{build_context_block(state)}"
 
 
 def opening_line(state) -> str:
@@ -151,4 +153,9 @@ def opening_line(state) -> str:
         return f"Hello, Apollo Clinic. Thanks for calling back — I was trying to reach you earlier about {purpose}. Is this a good time?"
     if len(patients) == 1:
         return f"Hello, Apollo Clinic, this is Asha. Good to hear from you again, {patients[0]['full_name'].split()[0].title()}! How can I help today?"
+    agent_config = ctx.get("agent_config") or {}
+    if agent_config.get("opening_line"):
+        # Custom greeting applies only to plain fresh calls — resume/callback/
+        # returning-patient openings above always win.
+        return agent_config["opening_line"]
     return "Hello! Apollo Clinic, Indiranagar and HSR Layout — this is Asha. How may I help you?"

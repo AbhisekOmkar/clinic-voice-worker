@@ -26,6 +26,15 @@ class ReceptionistRunner:
         from app.providers.stt import create_stt
         from app.providers.tts import create_tts
 
+        agent_config = (self.state.context or {}).get("agent_config") or {}
+        if llm is None:
+            llm = create_llm(
+                model=agent_config.get("llm_model"),
+                temperature=agent_config.get("temperature"),
+            )
+        if tts is None:
+            tts = create_tts(voice_id=agent_config.get("voice_id"))
+
         if turn_detection is None:
             try:
                 from livekit.plugins.turn_detector.multilingual import MultilingualModel
@@ -68,7 +77,13 @@ class ReceptionistRunner:
                 self.state.persist_soon()
 
     def build_agent(self) -> Agent:
-        return Agent(instructions=build_system_prompt(self.state), tools=ALL_TOOLS)
+        agent_config = (self.state.context or {}).get("agent_config") or {}
+        return Agent(
+            instructions=build_system_prompt(
+                self.state, base_prompt=agent_config.get("base_prompt")
+            ),
+            tools=ALL_TOOLS,
+        )
 
     def room_input_options(self) -> RoomInputOptions | None:
         if not settings.enable_noise_cancellation:

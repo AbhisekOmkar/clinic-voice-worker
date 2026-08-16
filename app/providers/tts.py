@@ -10,12 +10,13 @@ from loguru import logger
 from app.config.settings import settings
 
 
-def create_tts():
+def create_tts(voice_id: str | None = None):
     from livekit.plugins import cartesia
 
-    logger.info(f"TTS: cartesia {settings.cartesia_model} voice={settings.cartesia_voice_id[:8]}…")
+    resolved_voice = voice_id or settings.cartesia_voice_id
+    logger.info(f"TTS: cartesia {settings.cartesia_model} voice={resolved_voice[:8]}…")
     return cartesia.TTS(
         model=settings.cartesia_model,
-        voice=settings.cartesia_voice_id,
+        voice=resolved_voice,
         api_key=settings.cartesia_api_key,
     )

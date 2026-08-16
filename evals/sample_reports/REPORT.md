@@ -1,16 +1,16 @@
 # Eval report
 
-- run: `20260816_172641`  
+- run: `20260816_175513`  
 - model: `gpt-4.1`  
-- started: 2026-08-16T17:28:49.037333+00:00  
+- started: 2026-08-16T17:57:10.297719+00:00  
 
 ## Per-language summary
 
 | language | scenarios | passed | success | avg turns→done | redundant Q/call | judge lang violations | script drift | LLM TTFT p50 (ms) | hindi quality |
 |---|---|---|---|---|---|---|---|---|---|
-| en | 8 | 8 | 1.0 | 2.4 | 0.0 | 0 | 0 | 969.4 | None |
-| hi | 3 | 3 | 1.0 | 2.5 | 0.0 | 2 | 0 | 901.8 | 4.3 |
-| mixed | 1 | 1 | 1.0 | 2 | 0.0 | 2 | 0 | 839.0 | 4 |
+| en | 8 | 8 | 1.0 | 2.4 | 0.0 | 0 | 0 | 951.7 | None |
+| hi | 3 | 3 | 1.0 | 2.5 | 0.0 | 4 | 0 | 875.9 | 4 |
+| mixed | 1 | 1 | 1.0 | 2 | 0.0 | 0 | 0 | 864.6 | 5 |
 
 ## Scenarios
 
@@ -18,11 +18,11 @@
 |---|---|---|---|---|---|---|---|
 | book_specific_date_around_time_en | en | ✅ | ✅ | 2 | 0 | 0 |  |
 | book_weekday_preference_en | en | ✅ | ✅ | 2 | 0 | 0 |  |
-| book_after_work_hi | hi | ✅ | ✅ | 2 | 0 | 0 |  |
-| book_thursday_morning_mixed | mixed | ✅ | ✅ | 2 | 0 | 2 |  |
+| book_after_work_hi | hi | ✅ | ✅ | 2 | 0 | 1 |  |
+| book_thursday_morning_mixed | mixed | ✅ | ✅ | 2 | 0 | 0 |  |
 | earliest_cross_branch_en | en | ✅ | ✅ | 2 | 0 | 0 |  |
 | returning_patient_en | en | ✅ | ✅ | 2 | 0 | 0 |  |
-| family_line_hi | hi | ✅ | ✅ | 3 | 0 | 0 |  |
+| family_line_hi | hi | ✅ | ✅ | 3 | 0 | 1 |  |
 | dropped_call_resume_en | en | ✅ | ✅ | 2 | 0 | 0 |  |
 | callback_recognition_en | en | ✅ | ✅ | 3 | 0 | 0 |  |
 | stale_availability_recheck_en | en | ✅ | ✅ | 3 | 0 | 0 |  |

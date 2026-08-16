@@ -77,6 +77,9 @@ async def entrypoint(ctx: JobContext) -> None:
         logger.error(f"catalog load failed: {exc}")
         catalog = {"branches": [], "practitioners": []}
     context["catalog"] = catalog
+    context["agent_config"] = await ClinicGateway.agent_config(metadata.get("agent_id"))
+    if context["agent_config"]:
+        logger.info(f"Using agent persona: {context['agent_config'].get('name')}")
     state.context = context
     if context.get("resumable_session", {}) and context["resumable_session"]:
         state.collected.update(context["resumable_session"].get("collected", {}))
