@@ -18,5 +18,5 @@ expect:
   max_turns_to_completion: 3
   booking:
     patient_name: "Rohit Malhotra"
-    date: "{next_monday}"
+    date_weekday: "monday"
 judges: [redundant, language]

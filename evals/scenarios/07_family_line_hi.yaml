@@ -10,7 +10,7 @@ caller:
 seed:
   appointments:
     - {patient_name: "Rakesh Gupta", phone: "+919810000007", practitioner_id: dr-rajendra-s,  branch_id: br-indiranagar, date: "{next_monday}", start_hm: "09:30"}
-    - {patient_name: "Meena Gupta",  phone: "+919810000007", practitioner_id: dr-priti-shanker, branch_id: br-indiranagar, date: "{next_tuesday}", start_hm: "10:30"}
+    - {patient_name: "Meena Gupta",  phone: "+919810000007", practitioner_id: dr-himabindu-gali, branch_id: br-hsr, date: "{next_tuesday}", start_hm: "10:30"}
 turns:
   - user: "नमस्ते, अगले हफ़्ते डॉक्टर से अपॉइंटमेंट चाहिए।"
   - user: "मीना गुप्ता के लिए, स्किन की डॉक्टर से दिखाना है। {next_monday_speakable} शाम को हो पाएगा क्या?"

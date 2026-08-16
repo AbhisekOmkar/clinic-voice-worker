@@ -250,11 +250,19 @@ class ScenarioRunner:
                 for key, wanted in booking.items():
                     if key in ("phone",):
                         continue
+                    if key == "date_weekday":
+                        # Day-agnostic assertion: "any Monday" style scenarios
+                        # must not pin a calendar date (running ON a Monday
+                        # makes today the correct booking).
+                        from datetime import date as _date
+
+                        actual_day = _date.fromisoformat(
+                            appointment["date_local"]
+                        ).strftime("%A").lower()
+                        ok = ok and actual_day == str(wanted).lower()
+                        continue
                     actual = appointment.get({"date": "date_local"}.get(key, key))
-                    if key == "patient_name":
-                        ok = ok and str(wanted).lower() == str(actual).lower()
-                    else:
-                        ok = ok and str(wanted).lower() == str(actual).lower()
+                    ok = ok and str(wanted).lower() == str(actual).lower()
                 if ok:
                     match = appointment
                     break
