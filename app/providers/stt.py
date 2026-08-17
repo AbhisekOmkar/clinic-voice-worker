@@ -38,4 +38,15 @@ def create_stt(provider: str | None = None, model: str | None = None, language: 
 
     resolved_model = model or settings.openai_stt_model
     logger.info(f"STT: openai {resolved_model} (multilingual)")
-    return openai.STT(model=resolved_model, api_key=settings.openai_api_key)
+    return openai.STT(
+        model=resolved_model,
+        api_key=settings.openai_api_key,
+        # Bias the decoder: short narrowband phone utterances otherwise get
+        # misrecognised into random languages. The call is only ever
+        # English/Hindi/Hinglish.
+        prompt=(
+            "Phone call with a clinic receptionist in Bengaluru, India. "
+            "The caller speaks English, Hindi, or Hinglish (never other languages). "
+            "Doctor names: Meera Shridhar, Rajendra, Tejashwini, Nalini, Himabindu, Rajeev Ghat."
+        ),
+    )
