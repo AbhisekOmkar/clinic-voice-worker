@@ -97,6 +97,14 @@ def build_context_block(state) -> str:
                 f"    • {a['patient_name']} — {display_name(a['practitioner_name'])} ({a['specialty']}), {a['branch_name']}, {a['display']} [appointment_id: {a['appointment_id']}]"
             )
 
+    outbound = ctx.get("outbound_call")
+    if outbound:
+        lines.append(
+            f"- THIS IS AN OUTBOUND CALL: the clinic is calling the patient. Purpose: '{outbound.get('purpose')}'. "
+            "Introduce yourself and the clinic FIRST, state why you're calling, and check it's a good time. "
+            "If they can't talk, offer to call later and end politely. Never open like you're answering the front desk."
+        )
+
     resumable = ctx.get("resumable_session")
     if resumable:
         lines.append(
@@ -136,6 +144,13 @@ def build_system_prompt(state, base_prompt: str | None = None) -> str:
 
 def opening_line(state) -> str:
     ctx = state.context or {}
+    outbound = ctx.get("outbound_call")
+    if outbound:
+        purpose = outbound.get("purpose") or "your upcoming appointment"
+        return (
+            "Hello! This is Asha calling from Apollo Clinic, Bengaluru — I'm reaching out about "
+            f"{purpose}. Is this a good time to talk?"
+        )
     resumable = ctx.get("resumable_session")
     callback = ctx.get("pending_callback")
     patients = ctx.get("known_patients") or []

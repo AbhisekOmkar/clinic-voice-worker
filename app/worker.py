@@ -38,6 +38,31 @@ def _extract_sip_phone(room) -> str | None:
     return None
 
 
+async def _wait_for_answer(ctx, timeout_seconds: int = 55) -> bool:
+    """Poll the SIP participant's callStatus until the callee picks up."""
+    import asyncio
+
+    elapsed = 0.0
+    while elapsed < timeout_seconds:
+        sip_participants = [
+            p
+            for p in ctx.room.remote_participants.values()
+            if p.attributes.get("sip.callStatus")
+        ]
+        if sip_participants:
+            status = sip_participants[0].attributes.get("sip.callStatus")
+            if status == "active":
+                return True
+            if status in ("hangup", "automation"):
+                return False
+        elif elapsed > 8:
+            # SIP participant left (rejected/failed) before ever going active
+            return False
+        await asyncio.sleep(0.5)
+        elapsed += 0.5
+    return False
+
+
 async def entrypoint(ctx: JobContext) -> None:
     boot_start = time.time()
     await ctx.connect(auto_subscribe=AutoSubscribe.AUDIO_ONLY)
@@ -61,6 +86,21 @@ async def entrypoint(ctx: JobContext) -> None:
     if phone and phone.startswith("web:"):
         phone = None
 
+    if direction == "outbound":
+        # The room's SIP participant is ringing the patient — hold the agent
+        # until they actually pick up (or give up and record no_answer).
+        answered = await _wait_for_answer(ctx, timeout_seconds=55)
+        if not answered:
+            logger.info("Outbound call not answered")
+            if metadata.get("outbound_id"):
+                await ClinicGateway.update_outbound_status(metadata["outbound_id"], "no_answer")
+            await ClinicGateway.end_call(
+                metadata.get("call_id") or call_id,
+                {"disposition": "no_answer", "transcript": [], "completed": False},
+            )
+            ctx.shutdown(reason="no_answer")
+            return
+
     bind_call(call_id, phone)
     logger.info(f"Call starting: direction={direction} phone={phone} room={ctx.room.name}")
 
@@ -80,6 +120,14 @@ async def entrypoint(ctx: JobContext) -> None:
     context["agent_config"] = await ClinicGateway.agent_config(metadata.get("agent_id"))
     if context["agent_config"]:
         logger.info(f"Using agent persona: {context['agent_config'].get('name')}")
+    if direction == "outbound":
+        context["outbound_call"] = {
+            "purpose": metadata.get("purpose") or "a call from the clinic",
+            "outbound_id": metadata.get("outbound_id"),
+        }
+        # An outbound dial is never a resume/callback of itself
+        context["resumable_session"] = None
+        context["pending_callback"] = None
     state.context = context
     if context.get("resumable_session", {}) and context["resumable_session"]:
         state.collected.update(context["resumable_session"].get("collected", {}))
@@ -98,6 +146,13 @@ async def entrypoint(ctx: JobContext) -> None:
             callback = (state.context or {}).get("pending_callback")
             if callback and state.completed:
                 await ClinicGateway.mark_callback_handled(callback["outbound_id"])
+            outbound = (state.context or {}).get("outbound_call")
+            if outbound and outbound.get("outbound_id"):
+                had_conversation = any(t["role"] == "user" for t in state.transcript)
+                await ClinicGateway.update_outbound_status(
+                    outbound["outbound_id"],
+                    "completed" if had_conversation else "no_answer",
+                )
             await state.persist_final()
             await ClinicGateway.end_call(
                 call_id,

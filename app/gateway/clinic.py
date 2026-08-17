@@ -82,9 +82,11 @@ class ClinicGateway(BaseGateway):
 
     @classmethod
     async def mark_callback_handled(cls, outbound_id: str) -> None:
+        await cls.update_outbound_status(outbound_id, "completed")
+
+    @classmethod
+    async def update_outbound_status(cls, outbound_id: str, status: str) -> None:
         try:
-            await cls.client().patch(
-                f"/outbound-calls/{outbound_id}", json={"status": "completed"}
-            )
+            await cls.client().patch(f"/outbound-calls/{outbound_id}", json={"status": status})
         except Exception as exc:
-            logger.warning(f"mark_callback_handled failed: {exc}")
+            logger.warning(f"update_outbound_status failed: {exc}")
